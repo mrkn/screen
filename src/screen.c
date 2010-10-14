@@ -58,7 +58,7 @@
 
 #include "config.h"
 
-#ifdef HAVE_STROPTS_H
+#ifdef HAVE_SYS_STROPTS_H
 # include <sys/stropts.h>
 #endif
 
