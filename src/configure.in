@@ -830,7 +830,7 @@ AC_CHECKING(getutent)
 AC_TRY_LINK([
 #include <time.h> /* to get time_t on SCO */
 #include <sys/types.h>
-#if defined(SVR4) && !defined(DGUX)
+#if (defined(SVR4) || defined(__APPLE__)) && !defined(DGUX)
 #include <utmpx.h>
 #define utmp utmpx
 #else
@@ -838,6 +838,10 @@ AC_TRY_LINK([
 #endif
 #ifdef __hpux
 #define pututline _pututline
+#endif
+#ifdef __APPLE__
+#define pututline pututxline
+#define getutent getutxent
 #endif
 ],
 [int x = DEAD_PROCESS; pututline((struct utmp *)0); getutent();], AC_DEFINE(GETUTENT),
@@ -847,7 +851,7 @@ AC_CHECKING(getutent with -lgen)
 AC_TRY_LINK([
 #include <time.h>
 #include <sys/types.h>
-#if defined(SVR4) && !defined(DGUX)
+#if (defined(SVR4) || defined(__APPLE__)) && !defined(DGUX)
 #include <utmpx.h>
 #define utmp utmpx
 #else
@@ -855,6 +859,10 @@ AC_TRY_LINK([
 #endif
 #ifdef __hpux
 #define pututline _pututline
+#endif
+#ifdef __APPLE__
+#define pututline pututxline
+#define getutent getutxent
 #endif
 ],
 [int x = DEAD_PROCESS; pututline((struct utmp *)0); getutent();], AC_DEFINE(GETUTENT), LIBS="$olibs")
